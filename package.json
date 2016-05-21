@@ -1,6 +1,6 @@
 {
   "name": "react-google-autocomplete",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "React component for google autocomplete.",
   "main": "index.js",
   "scripts": {
@@ -13,7 +13,11 @@
   "keywords": [
     "react",
     "google",
-    "autocomplete"
+    "autocomplete",
+    "react google autocomplete",
+    "react google",
+    "react autocomplete",
+    "google autocomplete"
   ],
   "author": "Ven Korolev",
   "license": "ISC",
@@ -21,7 +25,7 @@
     "url": "https://github.com/ErrorPro/react-google-autocomplete/issues"
   },
   "homepage": "https://github.com/ErrorPro/react-google-autocomplete#readme",
-  "dependencies": {
-    "react": "^15.1.0"
-  }
+  "peerDependencies": {
+    "react": "*"
+  },
 }
