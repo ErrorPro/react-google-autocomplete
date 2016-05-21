@@ -1,6 +1,6 @@
 {
   "name": "react-google-autocomplete",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "React component for google autocomplete.",
   "main": "index.js",
   "scripts": {
