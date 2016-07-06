@@ -3,6 +3,7 @@ import React, {PropTypes} from 'react';
 export class ReactGoogleAutocomplete extends React.Component {
   static propTypes = {
     onPlaceSelected: PropTypes.func,
+    placeTypes: PropTypes.array,
   }
 
   constructor(props) {
@@ -12,7 +13,7 @@ export class ReactGoogleAutocomplete extends React.Component {
 
   componentDidMount() {
     this.autocomplete = new google.maps.places.Autocomplete(this.refs.input, {
-      types: ['(cities)'],
+      types: this.props.placeTypes || ['(cities)']
     });
 
     this.autocomplete.addListener('place_changed', this.onSelected.bind(this));
@@ -48,7 +49,7 @@ export class ReactCustomGoogleAutocomplete extends React.Component {
     this.service = new google.maps.places.AutocompleteService();
   }
 
-	onChange(e) {
+  onChange(e) {
     if(e.target.value) {
       this.service.getPlacePredictions({input: e.target.value, types: ['(cities)'],}, (predictions, status) => {
         if (status === 'OK' && predictions && predictions.length > 0) {
@@ -63,12 +64,12 @@ export class ReactCustomGoogleAutocomplete extends React.Component {
     }
   }
 
-	componentDidMount() {
+  componentDidMount() {
     if (this.props.input.value) {
       this.placeService = new google.maps.places.PlacesService(this.refs.div);
       this.placeService.getDetails({placeId: this.props.input.value}, (e, status) => {
         if(status === 'OK') {
-					this.refs.input.value = e.formatted_address;
+          this.refs.input.value = e.formatted_address;
         }
       });
     }
@@ -80,7 +81,7 @@ export class ReactCustomGoogleAutocomplete extends React.Component {
         {React.cloneElement(this.props.input,
           {
             ...this.props,
-    			  ref: 'input',
+            ref: 'input',
             onChange: (e) => {
               this.onChange(e);
             },
