@@ -12,7 +12,7 @@ export class ReactGoogleAutocomplete extends React.Component {
 
   componentDidMount() {
     this.autocomplete = new google.maps.places.Autocomplete(this.refs.input, {
-      types: ['(cities)'],
+      types: ['(cities)', 'address'],
     });
 
     this.autocomplete.addListener('place_changed', this.onSelected.bind(this));
