@@ -22,7 +22,10 @@ import Autocomplete from 'react-google-autocomplete';
     onPlaceSelected={(place) => {
       console.log(place);
     }}
+    types={['(regions)']}
 />
 ```
 
 The component has one function called `onPlaceSelected`. The function gets invoked every time a user chooses location.
+A `types` props means type of places in [google place API](https://developers.google.com/places/web-service/autocomplete#place_types). By default it uses (cities).
+You also can pass any props you want to the final input.
