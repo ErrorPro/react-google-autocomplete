@@ -3,6 +3,7 @@ import React, {PropTypes} from 'react';
 export default class ReactGoogleAutocomplete extends React.Component {
   static propTypes = {
     onPlaceSelected: PropTypes.func,
+    types: PropTypes.array,
   }
 
   constructor(props) {
