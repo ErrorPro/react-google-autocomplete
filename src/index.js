@@ -11,8 +11,10 @@ export class ReactGoogleAutocomplete extends React.Component {
   }
 
   componentDidMount() {
+    const { types=['(cities)'] } = this.props;
+
     this.autocomplete = new google.maps.places.Autocomplete(this.refs.input, {
-      types: ['(cities)'],
+      types,
     });
 
     this.autocomplete.addListener('place_changed', this.onSelected.bind(this));
@@ -25,11 +27,13 @@ export class ReactGoogleAutocomplete extends React.Component {
   }
 
   render() {
+    const {onPlaceSelected, types, ...rest} = this.props;
+
     return (
       <div>
         <input
           ref="input"
-          {...this.props}
+          {...rest}
         />
       </div>
     );
@@ -48,9 +52,11 @@ export class ReactCustomGoogleAutocomplete extends React.Component {
     this.service = new google.maps.places.AutocompleteService();
   }
 
-	onChange(e) {
+  onChange(e) {
+    const { types=['(cities)'] } = this.props;
+
     if(e.target.value) {
-      this.service.getPlacePredictions({input: e.target.value, types: ['(cities)'],}, (predictions, status) => {
+      this.service.getPlacePredictions({input: e.target.value, types}, (predictions, status) => {
         if (status === 'OK' && predictions && predictions.length > 0) {
           this.props.onOpen(predictions);
             console.log(predictions);
