@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 
-export class ReactGoogleAutocomplete extends React.Component {
+export default class ReactGoogleAutocomplete extends React.Component {
   static propTypes = {
     onPlaceSelected: PropTypes.func,
   }
