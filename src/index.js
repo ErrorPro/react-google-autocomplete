@@ -30,7 +30,7 @@ export default class ReactGoogleAutocomplete extends React.Component {
   }
 
   render() {
-    const {onPlaceSelected, types, ...rest} = this.props;
+    const {onPlaceSelected, types, componentRestrictions, ...rest} = this.props;
 
     return (
       <div>
