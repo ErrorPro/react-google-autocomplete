@@ -5,6 +5,7 @@ export default class ReactGoogleAutocomplete extends React.Component {
     onPlaceSelected: PropTypes.func,
     types: PropTypes.array,
     componentRestrictions: PropTypes.object,
+    bounds: PropTypes.object,
   }
 
   constructor(props) {
@@ -13,11 +14,12 @@ export default class ReactGoogleAutocomplete extends React.Component {
   }
 
   componentDidMount() {
-    const { types=['(cities)'], componentRestrictions={} } = this.props;
+    const { types=['(cities)'], componentRestrictions={}, bounds={} } = this.props;
 
     this.autocomplete = new google.maps.places.Autocomplete(this.refs.input, {
       types,
       componentRestrictions,
+      bounds,
     });
 
     this.autocomplete.addListener('place_changed', this.onSelected.bind(this));
@@ -30,7 +32,7 @@ export default class ReactGoogleAutocomplete extends React.Component {
   }
 
   render() {
-    const {onPlaceSelected, types, componentRestrictions, ...rest} = this.props;
+    const {onPlaceSelected, types, componentRestrictions, bounds, ...rest} = this.props;
 
     return (
       <div>
