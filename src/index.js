@@ -14,7 +14,7 @@ export default class ReactGoogleAutocomplete extends React.Component {
   }
 
   componentDidMount() {
-    const { types=['(cities)'], componentRestrictions={}, bounds={} } = this.props;
+    const { types=['(cities)'], componentRestrictions={}, bounds, } = this.props;
 
     this.autocomplete = new google.maps.places.Autocomplete(this.refs.input, {
       types,
