@@ -14,13 +14,17 @@ export default class ReactGoogleAutocomplete extends React.Component {
   }
 
   componentDidMount() {
-    const { types=['(cities)'], componentRestrictions={}, bounds, } = this.props;
-
-    this.autocomplete = new google.maps.places.Autocomplete(this.refs.input, {
+    const { types=['(cities)'], componentRestrictions, bounds, } = this.props;
+    const config = {
       types,
-      componentRestrictions,
       bounds,
-    });
+    };
+
+    if (componentRestrictions) {
+      config.componentRestrictions = componentRestrictions;
+    }
+
+    this.autocomplete = new google.maps.places.Autocomplete(this.refs.input, config);
 
     this.autocomplete.addListener('place_changed', this.onSelected.bind(this));
   }
