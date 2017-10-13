@@ -1,10 +1,11 @@
 {
   "name": "react-google-autocomplete",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "React component for google autocomplete.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel src/ --out-dir lib"
   },
   "repository": {
     "type": "git",
@@ -30,5 +31,12 @@
   },
   "peerDependencies": {
     "react": "*"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1"
   }
 }
