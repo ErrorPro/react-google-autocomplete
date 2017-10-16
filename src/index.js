@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export const PLACE_CHANGED = 'place_changed';
-
 export default class ReactGoogleAutocomplete extends React.Component {
   static propTypes = {
     onPlaceSelected: PropTypes.func,
@@ -14,6 +12,7 @@ export default class ReactGoogleAutocomplete extends React.Component {
   constructor(props) {
     super(props);
     this.autocomplete = null;
+    this.event = null;
   }
 
   componentDidMount() {
@@ -29,11 +28,11 @@ export default class ReactGoogleAutocomplete extends React.Component {
 
     this.autocomplete = new google.maps.places.Autocomplete(this.refs.input, config);
 
-    this.autocomplete.addListener(PLACE_CHANGED, this.onSelected.bind(this));
+    this.event = this.autocomplete.addListener('place_changed', this.onSelected.bind(this));
   }
 
   componentWillUnmount() {
-    this.autocomplete.removeListener(PLACE_CHANGED);
+    this.event.remove();
   }
 
   onSelected() {
