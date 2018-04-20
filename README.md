@@ -32,3 +32,7 @@ A `types` props means type of places in [google place API](https://developers.go
 A [componentRestrictions](https://developers.google.com/maps/documentation/javascript/reference#ComponentRestrictions) prop by default is empty.
 A [bounds](https://developers.google.com/maps/documentation/javascript/reference#AutocompleteOptions) prop by default is empty.
 You also can pass any props you want to the final input.
+
+## Contribution
+
+If you would like to see something in this library please create an issue and I will implement it as soon as possible.
