@@ -6,6 +6,7 @@ export default class ReactGoogleAutocomplete extends React.Component {
     onPlaceSelected: PropTypes.func,
     types: PropTypes.array,
     componentRestrictions: PropTypes.object,
+     autoplaceholder:PropTypes.string,
     bounds: PropTypes.object,
   }
 
@@ -42,10 +43,12 @@ export default class ReactGoogleAutocomplete extends React.Component {
   }
 
   render() {
-    const {onPlaceSelected, types, componentRestrictions, bounds, ...rest} = this.props;
+    const {onPlaceSelected, types, autoplaceholder, componentRestrictions, bounds, ...rest} = this.props;
 
     return (
       <input
+        placeholder={this.props.autoplaceholder}
+        className="field-input"
         ref="input"
         {...rest}
       />
