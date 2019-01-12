@@ -52,7 +52,15 @@ export default class ReactGoogleAutocomplete extends React.Component {
   componentWillUnmount() {
     this.event.remove();
   }
-
+  
+  componentDidUpdate(prevProps) {
+    if (this.autocomplete) {
+      if (prevProps.bounds !== this.props.bounds) {
+        this.autocomplete.setBounds(this.props.bounds)
+      }
+    }
+  }
+	
   onSelected() {
     if (this.props.onPlaceSelected) {
       this.props.onPlaceSelected(this.autocomplete.getPlace());
