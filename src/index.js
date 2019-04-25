@@ -16,10 +16,16 @@ export default class ReactGoogleAutocomplete extends React.Component {
   }
 
   componentDidMount() {
-    const { types=['(cities)'], componentRestrictions, bounds, } = this.props;
+    const {
+      types=['(cities)'],
+      componentRestrictions,
+      bounds,
+      fields = ["address_components", "geometry.location", "place_id", "formatted_address"]
+    } = this.props;
     const config = {
       types,
       bounds,
+      fields,
     };
 
     if (componentRestrictions) {
