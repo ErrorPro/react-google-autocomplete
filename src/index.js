@@ -7,6 +7,7 @@ export default class ReactGoogleAutocomplete extends React.Component {
     types: PropTypes.array,
     componentRestrictions: PropTypes.object,
     bounds: PropTypes.object,
+    fields: PropTypes.array,
   }
 
   constructor(props) {
