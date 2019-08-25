@@ -68,7 +68,7 @@ export default class ReactGoogleAutocomplete extends React.Component {
   }
 
   componentWillUnmount() {
-    this.event.remove();
+    if (this.event) this.event.remove();
   }
 
   onSelected() {
