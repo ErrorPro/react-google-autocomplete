@@ -72,7 +72,7 @@ export default class ReactGoogleAutocomplete extends React.Component {
   }
 
   onSelected() {
-    if (this.props.onPlaceSelected) {
+    if (this.props.onPlaceSelected && this.autocomplete) {
       this.props.onPlaceSelected(this.autocomplete.getPlace(), this.refs.input);
     }
   }
