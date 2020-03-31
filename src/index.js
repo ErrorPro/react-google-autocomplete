@@ -57,7 +57,7 @@ export default class ReactGoogleAutocomplete extends React.Component {
       const observerHack = new MutationObserver(() => {
         observerHack.disconnect();
         if (this.refs && this.refs.input) {
-          this.refs.input.autocomplete = 'disable-autofill';
+          this.refs.input.autocomplete = 'off';
         }
       });
       observerHack.observe(this.refs.input, {
