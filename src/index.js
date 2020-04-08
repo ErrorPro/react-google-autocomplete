@@ -7,7 +7,8 @@ export default class ReactGoogleAutocomplete extends React.Component {
     types: PropTypes.array,
     componentRestrictions: PropTypes.object,
     bounds: PropTypes.object,
-    fields: PropTypes.array
+    fields: PropTypes.array,
+    inputAutocompleteValue: PropTypes.string,
   };
 
   constructor(props) {
@@ -57,7 +58,7 @@ export default class ReactGoogleAutocomplete extends React.Component {
       const observerHack = new MutationObserver(() => {
         observerHack.disconnect();
         if (this.refs && this.refs.input) {
-          this.refs.input.autocomplete = 'off';
+          this.refs.input.autocomplete = this.props.inputAutocompleteValue || 'new-password';
         }
       });
       observerHack.observe(this.refs.input, {
@@ -111,7 +112,6 @@ export class ReactCustomGoogleAutocomplete extends React.Component {
         (predictions, status) => {
           if (status === 'OK' && predictions && predictions.length > 0) {
             this.props.onOpen(predictions);
-            console.log(predictions);
           } else {
             this.props.onClose();
           }
