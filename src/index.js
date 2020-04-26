@@ -116,6 +116,7 @@ export default class ReactGoogleAutocomplete extends React.Component {
       componentRestrictions,
       bounds,
       apiKey,
+      inputAutocompleteValue,
       ...rest
     } = this.props;
 
