@@ -9,6 +9,7 @@ export default class ReactGoogleAutocomplete extends React.Component {
     bounds: PropTypes.object,
     fields: PropTypes.array,
     inputAutocompleteValue: PropTypes.string,
+    apiKey: PropTypes.string
   };
 
   constructor(props) {
@@ -22,6 +23,7 @@ export default class ReactGoogleAutocomplete extends React.Component {
       types = ['(cities)'],
       componentRestrictions,
       bounds,
+      apiKey,
       fields = [
         'address_components',
         'geometry.location',
@@ -41,15 +43,23 @@ export default class ReactGoogleAutocomplete extends React.Component {
 
     this.disableAutofill();
 
-    this.autocomplete = new google.maps.places.Autocomplete(
-      this.refs.input,
-      config
-    );
+    const handleAutoComplete = () => {
+      this.autocomplete = new google.maps.places.Autocomplete(
+        this.refs.input,
+        config
+      );
 
-    this.event = this.autocomplete.addListener(
-      'place_changed',
-      this.onSelected.bind(this)
-    );
+      this.event = this.autocomplete.addListener(
+        'place_changed',
+        this.onSelected.bind(this)
+      );
+    };
+
+    if (apiKey) {
+      this.handleLoadScript().then(() => handleAutoComplete());
+    } else {
+      handleAutoComplete();
+    }
   }
 
   disableAutofill() {
@@ -78,12 +88,34 @@ export default class ReactGoogleAutocomplete extends React.Component {
     }
   }
 
+  handleLoadScript = () => {
+    const googleMapsScriptUrl = `https://maps.googleapis.com/maps/api/js?key=${this.props.apiKey}&libraries=places`;
+
+    // Check if script exists already
+    if (
+      document.querySelectorAll(`script[src="${googleMapsScriptUrl}"]`).length >
+      0
+    ) {
+      return Promise.resolve();
+    }
+
+    this.googleMapsScript = document.createElement('script');
+    this.googleMapsScript.src = googleMapsScriptUrl;
+
+    document.body.appendChild(this.googleMapsScript);
+
+    return new Promise((resolve) => {
+      this.googleMapsScript.addEventListener('load', () => resolve());
+    });
+  };
+
   render() {
     const {
       onPlaceSelected,
       types,
       componentRestrictions,
       bounds,
+      apiKey,
       ...rest
     } = this.props;
 
