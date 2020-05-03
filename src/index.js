@@ -4,11 +4,21 @@ import PropTypes from 'prop-types';
 export default class ReactGoogleAutocomplete extends React.Component {
   static propTypes = {
     onPlaceSelected: PropTypes.func,
-    types: PropTypes.array,
+    types: PropTypes.arrayOf(PropTypes.string),
     componentRestrictions: PropTypes.object,
     bounds: PropTypes.object,
     fields: PropTypes.array,
     inputAutocompleteValue: PropTypes.string,
+    options: PropTypes.shape({
+      componentRestrictions: PropTypes.object,
+      bounds: PropTypes.object,
+      location: PropTypes.object,
+      offset: PropTypes.number,
+      origin: PropTypes.object,
+      radius: PropTypes.number,
+      sessionToken: PropTypes.object,
+      types: PropTypes.arrayOf(PropTypes.string)
+    }),
   };
 
   constructor(props) {
@@ -27,9 +37,11 @@ export default class ReactGoogleAutocomplete extends React.Component {
         'geometry.location',
         'place_id',
         'formatted_address'
-      ]
+      ],
+      options = {}
     } = this.props;
     const config = {
+      ...options,
       types,
       bounds,
       fields
@@ -84,6 +96,7 @@ export default class ReactGoogleAutocomplete extends React.Component {
       types,
       componentRestrictions,
       bounds,
+      options,
       ...rest
     } = this.props;
 
