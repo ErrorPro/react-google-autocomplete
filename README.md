@@ -6,7 +6,18 @@
 
 `npm i react-google-autocomplete --save`
 
-You also have to include google autocomplete link api in your app. Somewhere in index.html or somwhere else.
+<hr>
+
+As of version 1.2.4, you can now pass an `apiKey` prop to automatically load the Google maps scripts. The api key can be found in your [google cloud console.](https://developers.google.com/maps/documentation/javascript/get-api-key)
+
+```js
+<AutoComplete
+  apiKey={YOUR_GOOGLE_MAPS_API_KEY}
+  onPlaceSelected={() => 'do something on select'}
+/>
+```
+
+Alternatively if not passing the `apiKey` prop, you can include google autocomplete link api in your app. Somewhere in index.html or somewhere else.
 
 ```html
   <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=[YOUR_API_KEY]&libraries=places"></script>
