@@ -29,6 +29,7 @@ export default class ReactGoogleAutocomplete extends React.Component {
   }
 
   componentDidMount() {
+    // TODO: only take options as configuration object, remove config props from the components props.
     const {
       types = ['(cities)'],
       componentRestrictions,
