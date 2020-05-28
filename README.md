@@ -43,6 +43,7 @@ A `types` props means type of places in [google place API](https://developers.go
 A [componentRestrictions](https://developers.google.com/maps/documentation/javascript/reference#ComponentRestrictions) prop by default is empty.
 A [bounds](https://developers.google.com/maps/documentation/javascript/reference#AutocompleteOptions) prop by default is empty.
 You also can pass any props you want to the final input. You can also set [fields](https://developers.google.com/maps/documentation/javascript/reference/places-service#PlaceResult) prop if you need extra information, now it defaults to basic data in order to control expenses.
+The `options`(optional) prop is the optional configuration to your Autocomplete instance. You can see full options [here](https://developers.google.com/maps/documentation/javascript/places-autocomplete#add_autocomplete) 
 
 ## Contribution
 
