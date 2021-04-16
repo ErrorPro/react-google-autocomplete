@@ -1,6 +1,6 @@
 ## React google autocomplete
 
-  This is a simple react component for working with google [autocomplete](https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete)
+This is a simple react component for working with google [autocomplete](https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete)
 
 ## Install
 
@@ -13,29 +13,46 @@ As of version 1.2.4, you can now pass an `apiKey` prop to automatically load the
 ```js
 <AutoComplete
   apiKey={YOUR_GOOGLE_MAPS_API_KEY}
-  onPlaceSelected={() => 'do something on select'}
+  onPlaceSelected={() => "do something on select"}
 />
 ```
 
 Alternatively if not passing the `apiKey` prop, you can include google autocomplete link api in your app. Somewhere in index.html or somewhere else.
 
 ```html
-  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=[YOUR_API_KEY]&libraries=places"></script>
+<script
+  type="text/javascript"
+  src="https://maps.googleapis.com/maps/api/js?key=[YOUR_API_KEY]&libraries=places"
+></script>
 ```
 
 ## Example
 
 ```js
-import Autocomplete from 'react-google-autocomplete';
+import Autocomplete from "react-google-autocomplete";
 
 <Autocomplete
-    style={{width: '90%'}}
-    onPlaceSelected={(place) => {
-      console.log(place);
-    }}
-    types={['(regions)']}
-    componentRestrictions={{country: "ru"}}
-/>
+  style={{ width: "90%" }}
+  onPlaceSelected={(place) => {
+    console.log(place);
+  }}
+  types={["(regions)"]}
+  componentRestrictions={{ country: "ru" }}
+/>;
+```
+
+## Typescript
+
+We are planning on adding a full support for TS and Flow in the later releases.
+
+```js
+import Autocomplete, {
+  ReactGoogleAutocomplete,
+} from "react-google-autocomplete";
+
+const AutocompleteTS: FC<ReactGoogleAutocomplete> = Autocomplete as FC<ReactGoogleAutocomplete>;
+
+<AutocompleteTS key="123" />
 ```
 
 The component has one function called `onPlaceSelected`. The function gets invoked every time a user chooses location.
@@ -43,7 +60,7 @@ A `types` props means type of places in [google place API](https://developers.go
 A [componentRestrictions](https://developers.google.com/maps/documentation/javascript/reference#ComponentRestrictions) prop by default is empty.
 A [bounds](https://developers.google.com/maps/documentation/javascript/reference#AutocompleteOptions) prop by default is empty.
 You also can pass any props you want to the final input. You can also set [fields](https://developers.google.com/maps/documentation/javascript/reference/places-service#PlaceResult) prop if you need extra information, now it defaults to basic data in order to control expenses.
-The `options`(optional) prop is the optional configuration to your Autocomplete instance. You can see full options [here](https://developers.google.com/maps/documentation/javascript/places-autocomplete#add_autocomplete) 
+The `options`(optional) prop is the optional configuration to your Autocomplete instance. You can see full options [here](https://developers.google.com/maps/documentation/javascript/places-autocomplete#add_autocomplete)
 
 ## Contribution
 

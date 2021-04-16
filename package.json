@@ -1,8 +1,9 @@
 {
   "name": "react-google-autocomplete",
-  "version": "1.2.6",
+  "version": "1.3.0",
   "description": "React component for google autocomplete.",
   "main": "index.js",
+  "types": "index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "babel src/ --out-dir lib"
