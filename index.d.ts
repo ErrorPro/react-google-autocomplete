@@ -1,3 +1,5 @@
+import { HTMLProps } from "react";
+
 export type OptionType = {
   componentRestrictions?: {};
   bounds?: {};
@@ -9,17 +11,17 @@ export type OptionType = {
   types?: string[];
 };
 
-export interface ReactGoogleAutocomplete {
+export interface ReactGoogleAutocomplete<
+  T = { current: null },
+  B = { current: null }
+> extends HTMLProps<HTMLInputElement> {
   onPlaceSelected?: (
     places: Record<string, unknown>,
     ref: HTMLInputElement
   ) => void;
-  types?: string[];
-  componentRestrictions?: {};
-  bounds?: {};
-  fields?: string[];
   inputAutocompleteValue?: string;
   options?: OptionType;
   apiKey?: string;
-  style?: CSSStyleDeclaration;
+  ref?: T;
+  autocompleteRef?: B;
 }
