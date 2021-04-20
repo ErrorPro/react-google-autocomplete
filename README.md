@@ -10,6 +10,10 @@ This is a simple react component for working with google [autocomplete](https://
 
 `npm i react-google-autocomplete --save`
 
+or
+
+`yarn add react-google-autocomplete`
+
 <hr>
 
 As of version 1.2.4, you can now pass an `apiKey` prop to automatically load the Google maps scripts. The api key can be found in your [google cloud console.](https://developers.google.com/maps/documentation/javascript/get-api-key)
