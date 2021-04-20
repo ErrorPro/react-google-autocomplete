@@ -1,5 +1,8 @@
+![](/docs/example.gif)
+
 ![](https://img.badgesize.io/ErrorPro/react-google-autocomplete/master/lib/index.js?compression=gzip&label=gzip)
 ![](https://img.badgesize.io/ErrorPro/react-google-autocomplete/master/lib/index.js?compression=brotli&label=brotli)
+![](https://badgen.net/npm/dm/react-google-autocomplete?labelColor=49516F&color=8994BC)
 [![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://GitHub.com/ErrorPro/react-google-autocomplete/master/LICENSE)
 
 ## React google autocomplete
@@ -130,9 +133,7 @@ const AutocompleteTS: FC<ReactGoogleAutocomplete> = Autocomplete as FC<ReactGoog
 <AutocompleteTS apiKey="123" />;
 ```
 
-### More examples(dynamic props, MaterialUI) how to use the lib could be found in `examples/index.js`
-
-[Video of the example](https://api.monosnap.com/file/download?id=vIjRwTxVyMj0Sd2Gjhsfie2SPk1y4l)
+More examples(dynamic props, MaterialUI) how to use the lib could be found in `docs/examples.js`
 
 ### TODO
 
