@@ -42,6 +42,10 @@ function ReactGoogleAutocomplete(props) {
 
     if (scriptElement) {
       return new Promise((resolve) => {
+        // in case we already have a script on the page and it's loaded we resolve
+        if (typeof google !== "undefined") return resolve();
+
+        // otherwise we wait until it's loaded and resolve
         scriptElement.addEventListener("load", () => resolve());
       });
     }
@@ -165,7 +169,9 @@ ReactGoogleAutocomplete.propTypes = {
   ]),
   autocompleteRef: PropTypes.oneOfType([
     PropTypes.func,
-    PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+    PropTypes.shape({
+      current: PropTypes.any,
+    }),
   ]),
   googleMapsScriptBaseUrl: PropTypes.string,
   onPlaceSelected: PropTypes.func,
