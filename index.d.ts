@@ -11,10 +11,8 @@ export type OptionType = {
   types?: string[];
 };
 
-export interface ReactGoogleAutocomplete<
-  T = { current: null },
-  B = { current: null }
-> extends HTMLProps<HTMLInputElement> {
+export interface ReactGoogleAutocompleteProps<T = { current: null }>
+  extends HTMLProps<HTMLInputElement> {
   onPlaceSelected?: (
     places: Record<string, unknown>,
     ref: HTMLInputElement
@@ -22,6 +20,9 @@ export interface ReactGoogleAutocomplete<
   inputAutocompleteValue?: string;
   options?: OptionType;
   apiKey?: string;
-  ref?: T;
-  autocompleteRef?: B;
+  autocompleteRef?: T;
 }
+
+export default function ReactGoogleAutocomplete(
+  props: ReactGoogleAutocompleteProps
+): JSX.Element;

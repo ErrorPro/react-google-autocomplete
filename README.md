@@ -121,16 +121,12 @@ const autocompleteRef = useRef(null);
 
 ### Typescript
 
-We are planning on adding full support for TS and Flow in the later releases.
+We are planning on rewritting the library with TS/Flow in the later releases but you can already use it with TypeScript.
 
 ```ts
-import Autocomplete, {
-  ReactGoogleAutocomplete,
-} from "react-google-autocomplete";
+import Autocomplete from "react-google-autocomplete";
 
-const AutocompleteTS: FC<ReactGoogleAutocomplete> = Autocomplete as FC<ReactGoogleAutocomplete>;
-
-<AutocompleteTS apiKey="123" />;
+<Autocomplete apiKey="123" />;
 ```
 
 More examples(dynamic props, MaterialUI) how to use the lib could be found in `docs/examples.js`
