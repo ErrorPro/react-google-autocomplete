@@ -2,12 +2,14 @@
 
 ![](https://img.badgesize.io/ErrorPro/react-google-autocomplete/master/lib/index.js?compression=gzip&label=gzip)
 ![](https://img.badgesize.io/ErrorPro/react-google-autocomplete/master/lib/index.js?compression=brotli&label=brotli)
-![](https://badgen.net/npm/dm/react-google-autocomplete?labelColor=49516F&color=8994BC)
+![](https://badgen.net/npm/dm/react-google-autocomplete)
 [![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://GitHub.com/ErrorPro/react-google-autocomplete/master/LICENSE)
 
-## React google autocomplete
+## The package provides 3 tools for working with google places services:
 
-This is a simple react component for working with google [autocomplete](https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete)
+1. [ReactGoogleAutocomplete](#reactgoogleautocomplete) is a simple html input component that provides functionality of the [google places widgets](https://developers.google.com/maps/documentation/javascript/reference/places-widget#AutocompleteOptions).
+2. [usePlacesWidget](#useplaceswidget) is a react hook that provides the same functionality as `ReactGoogleAutocomplete` does but it does not create any dom elements. Instead, it gives you back a react ref which you can set to any input you want.
+3. [usePlacesAutocompleteService](#useplacesautocompleteservice) is a more complex tool. It uses [google places autocomplete service](https://developers.google.com/maps/documentation/javascript/reference/places-autocomplete-service) and it provides all the functionality to you as the return value. In addition to that, you can set a `debounce` prop which will prevent users to send many requests to Google.
 
 ## Install
 
@@ -26,6 +28,13 @@ As of version 1.2.4, you can now pass an `apiKey` prop to automatically load the
   apiKey={YOUR_GOOGLE_MAPS_API_KEY}
   onPlaceSelected={(place) => console.log(place)}
 />
+or
+const { ref } = usePlacesWidget({
+  apiKey: YOUR_GOOGLE_MAPS_API_KEY,
+  onPlaceSelected: (place) => console.log(place)
+})
+
+<AnyInput ref={ref} />
 ```
 
 Alternatively if not passing the `apiKey` prop, you can include google autocomplete link api in your app. Somewhere in index.html or somewhere else. More info [here](https://developers.google.com/maps/documentation/places/web-service/autocomplete)
@@ -37,13 +46,26 @@ Alternatively if not passing the `apiKey` prop, you can include google autocompl
 ></script>
 ```
 
-## Props
+## ReactGoogleAutocomplete
+
+This is a simple react component for working with google [autocomplete](https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete)
+
+```js
+import Autocomplete from "react-google-autocomplete";
+
+<Autocomplete
+  apiKey={YOUR_GOOGLE_MAPS_API_KEY}
+  onPlaceSelected={(place) => {
+    console.log(place);
+  }}
+/>;
+```
+
+### Props
 
 - `apiKey`: pass to automatically load the Google maps scripts. The api key can be found in your [google cloud console.](https://developers.google.com/maps/documentation/javascript/get-api-key)
 
 - `ref`: [React ref](https://reactjs.org/docs/hooks-reference.html#useref) to be assigned the underlying text input ref.
-
-- `autocompleteRef`: [React ref](https://reactjs.org/docs/hooks-reference.html#useref) to be assigned the [google autocomplete instance](https://developers.google.com/maps/documentation/javascript/reference/places-widget#Autocomplete).
 
 - `onPlaceSelected: (place: `[PlaceResult](https://developers.google.com/maps/documentation/javascript/reference/places-service#PlaceResult)`, inputRef, autocompleteRef) => void`: The function gets invoked every time a user chooses location.
 
@@ -59,6 +81,86 @@ Alternatively if not passing the `apiKey` prop, you can include google autocompl
 - `defaultValue` prop is used for setting up the default value e.g `defaultValue={'Amsterdam'}`.
 
 You can pass any prop specified for the hmtl [input tag](https://www.w3schools.com/tags/tag_input.asp). You can also set [options.fields](https://developers.google.com/maps/documentation/javascript/reference/places-service#PlaceResult) prop if you need extra information, now it defaults to basic data in order to control expenses.
+
+## usePlacesWidget
+
+Is a hook that has a single config argument. It has exactly the same interface as ReactGoogleAutocomplete props. This hook is actually used in the ReactGoogleAutocomplete component.
+
+```js
+import { usePlacesWidget } from "react-google-autocomplete";
+
+export default () => {
+  const { ref, autocompleteRef } = usePlacesWidget({
+    apiKey:YOUR_GOOGLE_MAPS_API_KEY,
+    onPlaceSelected: (place) => {
+      console.log(place);
+    }
+  });
+
+  return <AnyInput ref={ref} {...anyOtherProp}>
+}
+```
+
+### Arguments
+
+It has only one config argument which has propperties: `apiKey`, `ref`, `onPlaceSelected`, `options`, `inputAutocompleteValue`, `googleMapsScriptBaseUrl`. The same props described [here](#reactgoogleautocomplete)
+
+## usePlacesAutocompleteService
+
+![](https://img.badgesize.io/ErrorPro/react-google-autocomplete/master/lib/usePlacesAutocompleteService.js?compression=brotli&label=brotli)
+![](https://img.badgesize.io/ErrorPro/react-google-autocomplete/master/lib/usePlacesAutocompleteService.js?compression=gzip&label=gzip)
+
+This is an initial implementation of debounced google places autocomplete service. It gives you an option to reduce the amount of requests sent to google which reduce your costs. For the time being we decided to use `lodash.debounce` to save time and in the later versions we might write our own implementation of debounce with hooks. Because it uses lodash we also decided to not put it into the index library file so it lives in its own file and could be only imported by it.
+
+```js
+import usePlacesService from "react-google-autocomplete/lib/usePlacesAutocompleteService";
+
+export default () => {
+  const {
+    placePredictions,
+    getPlacePredictions,
+    isPlacePredictionsLoading,
+  } = useGoogle({
+    apiKey: process.env.REACT_APP_GOOGLE,
+  });
+
+  return (
+    <>
+      <Input
+        placeholder="Debounce 500 ms"
+        onChange={(evt) => {
+          getPlacePredictions({ input: evt.target.value });
+        }}
+        loading={isPlacePredictionsLoading}
+      />
+      {placePredictions.map((item) => renderItem(item))}
+    </>
+  );
+};
+```
+
+[example](/docs/debounce.js)
+
+### Arguments
+
+The hook has only one config argument.
+
+- `config`:
+  - `apiKey`: Google api key, otherwise google api has to be loaded manually.
+  - `googleMapsScriptBaseUrl`: Provide custom google maps url. By default `https://maps.googleapis.com/maps/api/js`.
+  - `debounce`: Number of milliseconds to accumulate responses for.
+  - `options`: Default [options](https://developers.google.com/maps/documentation/javascript/reference/places-autocomplete-service#QueryAutocompletionRequest) which will be passed to every request.
+
+### Returned value
+
+The hook returns an object with properties:
+
+- `placePredictions`: an array of [AutocompletePrediction](https://developers.google.com/maps/documentation/javascript/reference/places-autocomplete-service#AutocompleteResponse)
+- `isPlacePredictionsLoading`: sets to true when a `getPlacePredictions` request is being sent and not yet resolved.
+- `getPlacePredictions: (opt: `[Options](https://developers.google.com/maps/documentation/javascript/reference/places-autocomplete-service#AutocompletionRequest)`): void`: a function which you call whenever you want to request places predictions. Takes one [argument](https://developers.google.com/maps/documentation/javascript/reference/places-autocomplete-service#AutocompleteResponse).
+- `queryPredictions`: an array of [QueryAutocompletePrediction](https://developers.google.com/maps/documentation/javascript/reference/places-autocomplete-service#QueryAutocompletePrediction)
+- `isQueryPredictionsLoading`: sets to true when `getQueryPredictions` request is being sent and not yet resolved.
+- `getQueryPredictions: (opt: `[Options](https://developers.google.com/maps/documentation/javascript/reference/places-autocomplete-service#QueryAutocompletionRequest)`): void`: a function which you call whenever you want to request query predictions. Takes one [argument](https://developers.google.com/maps/documentation/javascript/reference/places-autocomplete-service#QueryAutocompletionRequest).
 
 ## Examples
 
@@ -81,61 +183,65 @@ import Autocomplete from "react-google-autocomplete";
 />;
 ```
 
-### Passing refs
+or
 
 ```js
-import Autocomplete from "react-google-autocomplete";
+import { usePlacesWidget } from "react-google-autocomplete";
 
-const inputRef = useRef(null);
+export default () => {
+  const { ref } = usePlacesWidget({
+    apiKey: YOUR_GOOGLE_MAPS_API_KEY,
+    onPlaceSelected: (place) => {
+      console.log(place);
+    },
+    options: {
+      types: ["(regions)"],
+      componentRestrictions: { country: "ru" },
+    },
+  });
 
-useEffect(() => {
-  // focus on mount
-  inputRef.current.focus()
-}, [])
-
-<Autocomplete
-  ref={inputRef}
-  onPlaceSelected={(place) => {
-    console.log(place);
-  }}
-/>;
-
+  return <input ref={ref} style={{ width: "90%" }} defaultValue="Amsterdam" />;
+};
 ```
 
 ### Getting access to the google autocomplete instance
 
 ```js
-import Autocomplete from "react-google-autocomplete";
-
-const autocompleteRef = useRef(null);
-
 <Autocomplete
-  autocompleteRef={autocompleteRef}
-  onPlaceSelected={(place, inputRef, theSameAutocompletRef) => {
-    console.log(place);
+  onPlaceSelected={(place, inputRef, autocomplete) => {
+    console.log(autocomplete);
   }}
-/>;
-
-<button onClick={() => autocompleteRef.current.getPlace()}>Read place</button>;
+/>
 ```
+
+or
+
+```js
+const { ref, autocompleteRef } = usePlacesWidget({
+  apiKey: YOUR_GOOGLE_MAPS_API_KEY,
+  onPlaceSelected: (place) => {
+    console.log(place);
+  },
+});
+```
+
+### More examples(dynamic props, MaterialUI, Ant, Bootstrap) could be found in [docs/examples.js](/docs/examples.js)
+
+Formik example lives [here](/docs/formik.js)
+
+Debounce example lives [here](/docs/debounce.js)
 
 ### Typescript
 
-We are planning on rewritting the library with TS/Flow in the later releases but you can already use it with TypeScript.
-
-```ts
-import Autocomplete from "react-google-autocomplete";
-
-<Autocomplete apiKey="123" />;
-```
-
-More examples(dynamic props, MaterialUI) how to use the lib could be found in `docs/examples.js`
+We are planning on rewriting the library with TS/Flow in the later releases but you can already use it with TypeScript bacause we use [declaration files](https://www.typescriptlang.org/docs/handbook/declaration-files/dts-from-js.html).
 
 ### TODO
 
 - Check that it fully works with SSR
+- Add more UI libraries examples/supports
 - Add eslint config(base-airbnb)
 - Rewrite the lib to TS and add flow support
+- Remove lodash and use own built-in solution for debouncing
 
 ## Contribution
 

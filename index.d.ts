@@ -1,28 +1,30 @@
-import { HTMLProps } from "react";
+import { RefObject } from "react";
 
-export type OptionType = {
-  componentRestrictions?: {};
-  bounds?: {};
-  location?: {};
-  offset?: number;
-  origin?: {};
-  radius?: number;
-  sessionToken?: {};
-  types?: string[];
-};
-
-export interface ReactGoogleAutocompleteProps<T = { current: null }>
-  extends HTMLProps<HTMLInputElement> {
+export interface ReactGoogleAutocompleteProps {
   onPlaceSelected?: (
-    places: Record<string, unknown>,
-    ref: HTMLInputElement
+    places: google.maps.places.PlaceResult,
+    ref: RefObject<HTMLInputElement>,
+    autocompleteRef: RefObject<google.maps.places.Autocomplete>
   ) => void;
   inputAutocompleteValue?: string;
-  options?: OptionType;
+  options?: google.maps.places.AutocompleteOptions;
   apiKey?: string;
-  autocompleteRef?: T;
 }
 
-export default function ReactGoogleAutocomplete(
-  props: ReactGoogleAutocompleteProps
+export interface ReactGoogleAutocompleteInputProps
+  extends ReactGoogleAutocompleteProps,
+    React.DetailedHTMLProps<
+      React.HTMLAttributes<HTMLInputElement>,
+      HTMLInputElement
+    > {}
+
+export default function ReactGoogleAutocomplete<T extends any>(
+  props: ReactGoogleAutocompleteInputProps & T
 ): JSX.Element;
+
+export function usePlacesWidget(
+  props: ReactGoogleAutocompleteProps
+): {
+  ref: RefObject<null>;
+  autocompleteRef: RefObject<google.maps.places.Autocomplete>;
+};

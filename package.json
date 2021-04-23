@@ -1,6 +1,6 @@
 {
   "name": "react-google-autocomplete",
-  "version": "2.0.3",
+  "version": "2.1.0",
   "description": "React component for google autocomplete.",
   "main": "index.js",
   "types": "index.d.ts",
@@ -19,7 +19,11 @@
     "react google autocomplete",
     "react google",
     "react autocomplete",
-    "google autocomplete"
+    "google autocomplete",
+    "google places autocomplete",
+    "google places autocomplete service",
+    "google places service",
+    "google places widget"
   ],
   "author": "Ven Korolev",
   "license": "ISC",
@@ -28,15 +32,18 @@
   },
   "homepage": "https://github.com/ErrorPro/react-google-autocomplete#readme",
   "dependencies": {
+    "lodash.debounce": "^4.0.8",
     "prop-types": "^15.5.0"
   },
   "peerDependencies": {
-    "react": "*"
+    "react": ">=16.8.0"
   },
   "devDependencies": {
+    "@types/google.maps": "^3.44.3",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
+    "babel-preset-minify": "^0.5.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1"
   }
