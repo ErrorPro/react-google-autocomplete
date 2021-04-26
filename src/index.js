@@ -136,17 +136,7 @@ function ReactGoogleAutocomplete(props) {
     }
 
     return () => (event.current ? event.current.remove() : undefined);
-  }, [
-    types,
-    options,
-    fields,
-    componentRestrictions,
-    apiKey,
-    onPlaceSelected,
-    handleLoadScript,
-    autocompleteRef,
-    bounds,
-  ]);
+  }, []);
 
   return (
     <input
