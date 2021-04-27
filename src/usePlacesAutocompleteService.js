@@ -1,7 +1,7 @@
 import { useEffect, useCallback, useRef, useState } from "react";
 import debounceFn from "lodash.debounce";
 
-import { loadGoogleMapScript } from "./utils";
+import { isBrowser, loadGoogleMapScript } from "./utils";
 import { GOOGLE_MAP_SCRIPT_BASE_URL } from "./constants";
 
 export default function usePlacesAutocompleteService({
@@ -58,6 +58,8 @@ export default function usePlacesAutocompleteService({
   );
 
   useEffect(() => {
+    if (!isBrowser) return;
+
     const buildService = () => {
       // eslint-disable-next-line no-undef
       if (!google)

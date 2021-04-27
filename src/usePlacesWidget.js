@@ -46,7 +46,7 @@ export default function usePlacesWidget(props) {
       config.componentRestrictions = componentRestrictions;
     }
 
-    if (autocompleteRef.current || !inputRef.current) return;
+    if (autocompleteRef.current || !inputRef.current || !isBrowser) return;
 
     if (ref && !ref.current) ref.current = inputRef.current;
 

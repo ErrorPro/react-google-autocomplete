@@ -31,8 +31,8 @@ ReactGoogleAutocomplete.propTypes = {
   ref: PropTypes.oneOfType([
     // Either a function
     PropTypes.func,
-    // Or the instance of a DOM native element
-    PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+    // Or anything shaped { current: any }
+    PropTypes.shape({ current: PropTypes.any }),
   ]),
   googleMapsScriptBaseUrl: PropTypes.string,
   onPlaceSelected: PropTypes.func,
