@@ -84,6 +84,9 @@ You can pass any prop specified for the hmtl [input tag](https://www.w3schools.c
 
 ## usePlacesWidget
 
+![](https://img.badgesize.io/ErrorPro/react-google-autocomplete/master/lib/usePlacesWidget.js?compression=brotli&label=brotli)
+![](https://img.badgesize.io/ErrorPro/react-google-autocomplete/master/lib/usePlacesWidget.js?compression=gzip&label=gzip)
+
 Is a hook that has a single config argument. It has exactly the same interface as ReactGoogleAutocomplete props. This hook is actually used in the ReactGoogleAutocomplete component.
 
 ```js
