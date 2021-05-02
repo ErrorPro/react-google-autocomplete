@@ -6,17 +6,17 @@ export const loadGoogleMapScript = (
 ) => {
   if (!isBrowser) return Promise.resolve();
 
-  const [scriptElement] = document.querySelectorAll(
+  const scriptElements = document.querySelectorAll(
     `script[src*="${googleMapsScriptBaseUrl}"`
   );
 
-  if (scriptElement) {
+  if (scriptElements && scriptElements.length) {
     return new Promise((resolve) => {
       // in case we already have a script on the page and it's loaded we resolve
       if (typeof google !== "undefined") return resolve();
 
       // otherwise we wait until it's loaded and resolve
-      scriptElement.addEventListener("load", () => resolve());
+      scriptElements[0].addEventListener("load", () => resolve());
     });
   }
 

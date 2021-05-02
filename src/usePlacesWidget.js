@@ -27,7 +27,7 @@ export default function usePlacesWidget(props) {
   const event = useRef(null);
   const autocompleteRef = useRef(null);
   const observerHack = useRef(null);
-  const googleMapsScriptUrl = `${googleMapsScriptBaseUrl}?key=${apiKey}&libraries=places`;
+  const googleMapsScriptUrl = `${googleMapsScriptBaseUrl}?libraries=places&key=${apiKey}`;
 
   const handleLoadScript = useCallback(
     () => loadGoogleMapScript(googleMapsScriptBaseUrl, googleMapsScriptUrl),
@@ -51,16 +51,17 @@ export default function usePlacesWidget(props) {
     if (ref && !ref.current) ref.current = inputRef.current;
 
     const handleAutoComplete = () => {
-      // eslint-disable-next-line no-undef
       if (typeof google === "undefined")
         return console.error(
           "Google has not been found. Make sure your provide apiKey prop."
         );
 
+      if (!google.maps.places)
+        return console.error("Google maps places API must be loaded.");
+
       if (!inputRef.current instanceof HTMLInputElement)
         return console.error("Input ref must be HTMLInputElement.");
 
-      // eslint-disable-next-line no-undef
       autocompleteRef.current = new google.maps.places.Autocomplete(
         inputRef.current,
         config
