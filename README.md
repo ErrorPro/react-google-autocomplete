@@ -9,7 +9,7 @@
 
 1. [ReactGoogleAutocomplete](#reactgoogleautocomplete) is a simple html input component that provides functionality of the [google places widgets](https://developers.google.com/maps/documentation/javascript/reference/places-widget#AutocompleteOptions).
 2. [usePlacesWidget](#useplaceswidget) is a react hook that provides the same functionality as `ReactGoogleAutocomplete` does but it does not create any dom elements. Instead, it gives you back a react ref which you can set to any input you want.
-3. [usePlacesAutocompleteService](#useplacesautocompleteservice) is a more complex tool. It uses [google places autocomplete service](https://developers.google.com/maps/documentation/javascript/reference/places-autocomplete-service) and it provides all the functionality to you as the returned value. In addition to that, you can set a `debounce` prop which will reduce the amount of requests users send to Google.
+3. [usePlacesAutocompleteService](#useplacesautocompleteservice) is a more complex react hook. It uses [google places autocomplete service](https://developers.google.com/maps/documentation/javascript/reference/places-autocomplete-service) and it provides all the functionality to you as the returned value. In addition to that, you can set a `debounce` prop which will reduce the amount of requests users send to Google.
 
 ## Install
 
@@ -153,6 +153,7 @@ The hook has only one config argument.
   - `googleMapsScriptBaseUrl`: Provide custom google maps url. By default `https://maps.googleapis.com/maps/api/js`.
   - `debounce`: Number of milliseconds to accumulate responses for.
   - `options`: Default [options](https://developers.google.com/maps/documentation/javascript/reference/places-autocomplete-service#QueryAutocompletionRequest) which will be passed to every request.
+  - `sessionToken`: If true then a [session token](https://developers.google.com/maps/documentation/javascript/reference/places-autocomplete-service#AutocompleteSessionToken) will be attached to every request.
 
 ### Returned value
 

@@ -9,6 +9,7 @@ export default function usePlacesAutocompleteService({
   googleMapsScriptBaseUrl = GOOGLE_MAP_SCRIPT_BASE_URL,
   debounce = 300,
   options = {},
+  sessionToken,
 }) {
   const googleMapsScriptUrl = `${googleMapsScriptBaseUrl}?key=${apiKey}&libraries=places`;
   const [placePredictions, setPlacePredictions] = useState([]);
@@ -18,6 +19,7 @@ export default function usePlacesAutocompleteService({
   const [queryInputValue, setQueryInputValue] = useState(false);
   const [queryPredictions, setQueryPredictions] = useState([]);
   const googleAutocompleteService = useRef(null);
+  const autocompleteSession = useRef(null);
   const handleLoadScript = useCallback(
     () => loadGoogleMapScript(googleMapsScriptBaseUrl, googleMapsScriptUrl),
     [googleMapsScriptBaseUrl, googleMapsScriptUrl]
@@ -30,6 +32,9 @@ export default function usePlacesAutocompleteService({
           {
             ...options,
             ...optionsArg,
+            ...(sessionToken && autocompleteSession.current
+              ? { sessionToken: autocompleteSession.current }
+              : {}),
           },
           (r) => {
             setIsPlacePredsLoading(false);
@@ -47,6 +52,9 @@ export default function usePlacesAutocompleteService({
           {
             ...options,
             ...optionsArg,
+            ...(sessionToken && autocompleteSession.current
+              ? { sessionToken: autocompleteSession.current }
+              : {}),
           },
           (r) => {
             setIsQueryPredsLoading(false);
@@ -69,6 +77,9 @@ export default function usePlacesAutocompleteService({
 
       // eslint-disable-next-line no-undef
       googleAutocompleteService.current = new google.maps.places.AutocompleteService();
+
+      if (sessionToken)
+        autocompleteSession.current = new google.maps.places.AutocompleteSessionToken();
     };
 
     if (apiKey) {
@@ -76,7 +87,7 @@ export default function usePlacesAutocompleteService({
     } else {
       buildService();
     }
-  });
+  }, []);
 
   return {
     placePredictions: placeInputValue ? placePredictions : [],
@@ -86,10 +97,8 @@ export default function usePlacesAutocompleteService({
         setPlaceInputValue(opt.input);
         setIsPlacePredsLoading(true);
         debouncedPlacePredictions(opt);
-
         return;
       }
-
       setPlacePredictions([]);
       setPlaceInputValue(null);
       debouncedPlacePredictions(opt);
@@ -102,10 +111,8 @@ export default function usePlacesAutocompleteService({
         setQueryInputValue(opt.input);
         setIsQueryPredsLoading(true);
         debouncedQueryPredictions(opt);
-
         return;
       }
-
       setQueryPredictions([]);
       setQueryInputValue(null);
       debouncedQueryPredictions(opt);
