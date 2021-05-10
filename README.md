@@ -11,6 +11,8 @@
 2. [usePlacesWidget](#useplaceswidget) is a react hook that provides the same functionality as `ReactGoogleAutocomplete` does but it does not create any dom elements. Instead, it gives you back a react ref which you can set to any input you want.
 3. [usePlacesAutocompleteService](#useplacesautocompleteservice) is a more complex react hook. It uses [google places autocomplete service](https://developers.google.com/maps/documentation/javascript/reference/places-autocomplete-service) and it provides all the functionality to you as the returned value. In addition to that, you can set a `debounce` prop which will reduce the amount of requests users send to Google.
 
+If you find this package helpful please give it a star because it hepls it grow and motivates us to build new features and support the old ones.
+
 ## Install
 
 `npm i react-google-autocomplete --save`
@@ -119,13 +121,10 @@ This is an initial implementation of debounced google places autocomplete servic
 import usePlacesService from "react-google-autocomplete/lib/usePlacesAutocompleteService";
 
 export default () => {
-  const {
-    placePredictions,
-    getPlacePredictions,
-    isPlacePredictionsLoading,
-  } = useGoogle({
-    apiKey: process.env.REACT_APP_GOOGLE,
-  });
+  const { placePredictions, getPlacePredictions, isPlacePredictionsLoading } =
+    useGoogle({
+      apiKey: process.env.REACT_APP_GOOGLE,
+    });
 
   return (
     <>
