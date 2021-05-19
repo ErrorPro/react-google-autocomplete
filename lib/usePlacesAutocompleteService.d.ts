@@ -7,6 +7,7 @@ interface usePlacesAutocompleteServiceConfig {
 }
 
 interface usePlacesAutocompleteServiceResponse {
+  placesAutocompleteService: google.maps.places.AutocompleteService | null;
   placePredictions: google.maps.places.AutocompletePrediction[];
   isPlacePredictionsLoading: boolean;
   getPlacePredictions: (opt: google.maps.places.AutocompletionRequest) => void;

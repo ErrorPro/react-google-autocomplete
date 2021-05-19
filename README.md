@@ -158,6 +158,7 @@ The hook has only one config argument.
 
 The hook returns an object with properties:
 
+- `placesAutocompleteService`: Instance of [AutocompleteService](https://developers.google.com/maps/documentation/javascript/reference/places-autocomplete-service#AutocompleteService)
 - `placePredictions`: an array of [AutocompletePrediction](https://developers.google.com/maps/documentation/javascript/reference/places-autocomplete-service#AutocompleteResponse)
 - `isPlacePredictionsLoading`: sets to true when a `getPlacePredictions` request is being sent and not yet resolved.
 - `getPlacePredictions: (opt: `[Options](https://developers.google.com/maps/documentation/javascript/reference/places-autocomplete-service#AutocompletionRequest)`): void`: a function which you call whenever you want to request places predictions. Takes one [argument](https://developers.google.com/maps/documentation/javascript/reference/places-autocomplete-service#AutocompleteResponse).
