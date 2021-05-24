@@ -122,7 +122,7 @@ import usePlacesService from "react-google-autocomplete/lib/usePlacesAutocomplet
 
 export default () => {
   const { placePredictions, getPlacePredictions, isPlacePredictionsLoading } =
-    useGoogle({
+    usePlacesService({
       apiKey: process.env.REACT_APP_GOOGLE,
     });
 
