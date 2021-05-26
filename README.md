@@ -110,6 +110,13 @@ export default () => {
 
 It has only one config argument which has propperties: `apiKey`, `ref`, `onPlaceSelected`, `options`, `inputAutocompleteValue`, `googleMapsScriptBaseUrl`. The same props described [here](#reactgoogleautocomplete)
 
+### Returned value
+
+This hook returns object with only two properties:
+
+  - `ref` - is a react ref which you can assign to any input you would like.
+  - `autocompleteRef` - is the [autocomplete](https://developers.google.com/maps/documentation/javascript/reference/places-widget#Autocomplete) instance
+
 ## usePlacesAutocompleteService
 
 ![](https://img.badgesize.io/ErrorPro/react-google-autocomplete/master/lib/usePlacesAutocompleteService.js?compression=brotli&label=brotli)
