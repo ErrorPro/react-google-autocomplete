@@ -82,6 +82,8 @@ import Autocomplete from "react-google-autocomplete";
 
 - `defaultValue` prop is used for setting up the default value e.g `defaultValue={'Amsterdam'}`.
 
+- `language`: Set [language](https://developers.google.com/maps/documentation/places/web-service/details#PlaceDetailsRequests) to be used for the results. If not specified, Google defaults to load the most appropriate language based on the users location or browser setting.
+
 You can pass any prop specified for the hmtl [input tag](https://www.w3schools.com/tags/tag_input.asp). You can also set [options.fields](https://developers.google.com/maps/documentation/javascript/reference/places-service#PlaceResult) prop if you need extra information, now it defaults to basic data in order to control expenses.
 
 ## usePlacesWidget
@@ -160,6 +162,7 @@ The hook has only one config argument.
   - `debounce`: Number of milliseconds to accumulate responses for.
   - `options`: Default [options](https://developers.google.com/maps/documentation/javascript/reference/places-autocomplete-service#QueryAutocompletionRequest) which will be passed to every request.
   - `sessionToken`: If true then a [session token](https://developers.google.com/maps/documentation/javascript/reference/places-autocomplete-service#AutocompleteSessionToken) will be attached to every request.
+  - `language`: If the language code is set, the results will be returned in the specificed [language](https://developers.google.com/maps/documentation/places/web-service/details#PlaceDetailsRequests)
 
 ### Returned value
 

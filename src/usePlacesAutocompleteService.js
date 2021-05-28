@@ -10,8 +10,10 @@ export default function usePlacesAutocompleteService({
   debounce = 300,
   options = {},
   sessionToken,
+  language,
 }) {
-  const googleMapsScriptUrl = `${googleMapsScriptBaseUrl}?key=${apiKey}&libraries=places`;
+  const languageQueryParam = language ? `&language=${language}` : '';
+  const googleMapsScriptUrl = `${googleMapsScriptBaseUrl}?key=${apiKey}&libraries=places${languageQueryParam}`;
   const [placePredictions, setPlacePredictions] = useState([]);
   const [isPlacePredsLoading, setIsPlacePredsLoading] = useState(false);
   const [placeInputValue, setPlaceInputValue] = useState(null);
