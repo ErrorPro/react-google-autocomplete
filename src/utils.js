@@ -6,6 +6,10 @@ export const loadGoogleMapScript = (
 ) => {
   if (!isBrowser) return Promise.resolve();
 
+  if (typeof google !== "undefined") {
+    if (google.maps && google.maps.api) return Promise.resolve();
+  }
+
   const scriptElements = document.querySelectorAll(
     `script[src*="${googleMapsScriptBaseUrl}"`
   );

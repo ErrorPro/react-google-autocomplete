@@ -28,7 +28,7 @@ export default function usePlacesWidget(props) {
   const event = useRef(null);
   const autocompleteRef = useRef(null);
   const observerHack = useRef(null);
-  const languageQueryParam = language ? `&language=${language}` : '';
+  const languageQueryParam = language ? `&language=${language}` : "";
   const googleMapsScriptUrl = `${googleMapsScriptBaseUrl}?libraries=places&key=${apiKey}${languageQueryParam}`;
 
   const handleLoadScript = useCallback(
