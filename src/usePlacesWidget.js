@@ -22,12 +22,14 @@ export default function usePlacesWidget(props) {
       ...options
     } = {},
     googleMapsScriptBaseUrl = GOOGLE_MAP_SCRIPT_BASE_URL,
+    language,
   } = props;
   const inputRef = useRef(null);
   const event = useRef(null);
   const autocompleteRef = useRef(null);
   const observerHack = useRef(null);
-  const googleMapsScriptUrl = `${googleMapsScriptBaseUrl}?libraries=places&key=${apiKey}`;
+  const languageQueryParam = language ? `&language=${language}` : '';
+  const googleMapsScriptUrl = `${googleMapsScriptBaseUrl}?libraries=places&key=${apiKey}${languageQueryParam}`;
 
   const handleLoadScript = useCallback(
     () => loadGoogleMapScript(googleMapsScriptBaseUrl, googleMapsScriptUrl),

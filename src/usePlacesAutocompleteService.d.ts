@@ -4,6 +4,7 @@ interface usePlacesAutocompleteServiceConfig {
   debounce?: number;
   options?: google.maps.places.QueryAutocompletionRequest;
   sessionToken?: boolean;
+  language?: string;
 }
 
 interface usePlacesAutocompleteServiceResponse {
