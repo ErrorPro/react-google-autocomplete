@@ -251,7 +251,7 @@ We are planning on rewriting the library with TS/Flow in the later releases but 
 
 ### TODO
 
-- Check that it fully works with SSR
+- ~~Check that it fully works with SSR~~ Fully works with SSR: tested with: Next.js, Gatsby.js and custom SSR based on Express.js.
 - Add more UI libraries examples/supports
 - Add eslint config(base-airbnb)
 - Rewrite the lib to TS and add flow support
