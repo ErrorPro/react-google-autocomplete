@@ -8,6 +8,10 @@ interface usePlacesAutocompleteServiceConfig {
 }
 
 interface usePlacesAutocompleteServiceResponse {
+  placesService: google.maps.places.PlacesService | null;
+  autocompleteSessionToken:
+    | google.maps.places.AutocompleteSessionToken
+    | undefined;
   placesAutocompleteService: google.maps.places.AutocompleteService | null;
   placePredictions: google.maps.places.AutocompletePrediction[];
   isPlacePredictionsLoading: boolean;

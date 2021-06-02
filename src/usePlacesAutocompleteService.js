@@ -12,7 +12,7 @@ export default function usePlacesAutocompleteService({
   sessionToken,
   language,
 }) {
-  const languageQueryParam = language ? `&language=${language}` : '';
+  const languageQueryParam = language ? `&language=${language}` : "";
   const googleMapsScriptUrl = `${googleMapsScriptBaseUrl}?key=${apiKey}&libraries=places${languageQueryParam}`;
   const [placePredictions, setPlacePredictions] = useState([]);
   const [isPlacePredsLoading, setIsPlacePredsLoading] = useState(false);
@@ -21,6 +21,7 @@ export default function usePlacesAutocompleteService({
   const [queryInputValue, setQueryInputValue] = useState(false);
   const [queryPredictions, setQueryPredictions] = useState([]);
   const placesAutocompleteService = useRef(null);
+  const placesService = useRef(null);
   const autocompleteSession = useRef(null);
   const handleLoadScript = useCallback(
     () => loadGoogleMapScript(googleMapsScriptBaseUrl, googleMapsScriptUrl),
@@ -32,11 +33,11 @@ export default function usePlacesAutocompleteService({
       if (placesAutocompleteService.current && optionsArg.input)
         placesAutocompleteService.current.getPlacePredictions(
           {
-            ...options,
-            ...optionsArg,
             ...(sessionToken && autocompleteSession.current
               ? { sessionToken: autocompleteSession.current }
               : {}),
+            ...options,
+            ...optionsArg,
           },
           (r) => {
             setIsPlacePredsLoading(false);
@@ -52,11 +53,11 @@ export default function usePlacesAutocompleteService({
       if (placesAutocompleteService.current && optionsArg.input)
         placesAutocompleteService.current.getQueryPredictions(
           {
-            ...options,
-            ...optionsArg,
             ...(sessionToken && autocompleteSession.current
               ? { sessionToken: autocompleteSession.current }
               : {}),
+            ...options,
+            ...optionsArg,
           },
           (r) => {
             setIsQueryPredsLoading(false);
@@ -81,6 +82,11 @@ export default function usePlacesAutocompleteService({
       placesAutocompleteService.current =
         new google.maps.places.AutocompleteService();
 
+      // eslint-disable-next-line no-undef
+      placesService.current = new google.maps.places.PlacesService(
+        document.createElement("div")
+      );
+
       if (sessionToken)
         autocompleteSession.current =
           new google.maps.places.AutocompleteSessionToken();
@@ -94,6 +100,8 @@ export default function usePlacesAutocompleteService({
   }, []);
 
   return {
+    placesService: placesService.current,
+    autocompleteSessionToken: autocompleteSession.current,
     placesAutocompleteService: placesAutocompleteService.current,
     placePredictions: placeInputValue ? placePredictions : [],
     isPlacePredictionsLoading: isPlacePredsLoading,

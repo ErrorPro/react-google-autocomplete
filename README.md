@@ -116,8 +116,8 @@ It has only one config argument which has propperties: `apiKey`, `ref`, `onPlace
 
 This hook returns object with only two properties:
 
-  - `ref` - is a react ref which you can assign to any input you would like.
-  - `autocompleteRef` - is the [autocomplete](https://developers.google.com/maps/documentation/javascript/reference/places-widget#Autocomplete) instance
+- `ref` - is a react ref which you can assign to any input you would like.
+- `autocompleteRef` - is the [autocomplete](https://developers.google.com/maps/documentation/javascript/reference/places-widget#Autocomplete) instance
 
 ## usePlacesAutocompleteService
 
@@ -130,10 +130,25 @@ This is an initial implementation of debounced google places autocomplete servic
 import usePlacesService from "react-google-autocomplete/lib/usePlacesAutocompleteService";
 
 export default () => {
-  const { placePredictions, getPlacePredictions, isPlacePredictionsLoading } =
-    usePlacesService({
-      apiKey: process.env.REACT_APP_GOOGLE,
-    });
+  const {
+    placesService,
+    placePredictions,
+    getPlacePredictions,
+    isPlacePredictionsLoading,
+  } = usePlacesService({
+    apiKey: process.env.REACT_APP_GOOGLE,
+  });
+
+  useEffect(() => {
+    // fetch place details for the first element in placePredictions array
+    if (placePredictions.length)
+      service.placesService?.getDetails(
+        {
+          placeId: placePredictions[0].place_id,
+        },
+        (placeDetails) => savePlaceDetailsToState(placeDetails)
+      );
+  }, [placePredictions]);
 
   return (
     <>
@@ -169,6 +184,8 @@ The hook has only one config argument.
 The hook returns an object with properties:
 
 - `placesAutocompleteService`: Instance of [AutocompleteService](https://developers.google.com/maps/documentation/javascript/reference/places-autocomplete-service#AutocompleteService)
+- `placesService`: Instance of [PlacesService](https://developers.google.com/maps/documentation/javascript/reference/places-service#PlacesService)
+- `autocompleteSessionToken`: Instance of [AutocompleteSessionToken](https://developers.google.com/maps/documentation/javascript/reference/places-autocomplete-service#AutocompleteSessionToken). You can use this to [group several requests into a single session](https://developers.google.com/maps/documentation/places/web-service/session-tokens)
 - `placePredictions`: an array of [AutocompletePrediction](https://developers.google.com/maps/documentation/javascript/reference/places-autocomplete-service#AutocompleteResponse)
 - `isPlacePredictionsLoading`: sets to true when a `getPlacePredictions` request is being sent and not yet resolved.
 - `getPlacePredictions: (opt: `[Options](https://developers.google.com/maps/documentation/javascript/reference/places-autocomplete-service#AutocompletionRequest)`): void`: a function which you call whenever you want to request places predictions. Takes one [argument](https://developers.google.com/maps/documentation/javascript/reference/places-autocomplete-service#AutocompleteResponse).
