@@ -274,6 +274,10 @@ We are planning on rewriting the library with TS/Flow in the later releases but 
 - Rewrite the lib to TS and add flow support
 - Remove lodash and use own built-in solution for debouncing
 
+### Troubleshooting
+
+- You have included the Google Maps JavaScript API multiple times on this page. [Solution](https://github.com/ErrorPro/react-google-autocomplete/issues/89#issuecomment-846583668)
+
 ## Contribution
 
 If you would like to see something in this library please create an issue and I will implement it as soon as possible.
