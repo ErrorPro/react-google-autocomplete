@@ -2,18 +2,14 @@ import { useEffect, useCallback, useRef, useState } from "react";
 import debounceFn from "lodash.debounce";
 
 import { isBrowser, loadGoogleMapScript } from "./utils";
-import { GOOGLE_MAP_SCRIPT_BASE_URL } from "./constants";
 
 export default function usePlacesAutocompleteService({
   apiKey,
-  googleMapsScriptBaseUrl = GOOGLE_MAP_SCRIPT_BASE_URL,
   debounce = 300,
   options = {},
   sessionToken,
   language,
 }) {
-  const languageQueryParam = language ? `&language=${language}` : "";
-  const googleMapsScriptUrl = `${googleMapsScriptBaseUrl}?key=${apiKey}&libraries=places${languageQueryParam}`;
   const [placePredictions, setPlacePredictions] = useState([]);
   const [isPlacePredsLoading, setIsPlacePredsLoading] = useState(false);
   const [placeInputValue, setPlaceInputValue] = useState(null);
@@ -24,8 +20,14 @@ export default function usePlacesAutocompleteService({
   const placesService = useRef(null);
   const autocompleteSession = useRef(null);
   const handleLoadScript = useCallback(
-    () => loadGoogleMapScript(googleMapsScriptBaseUrl, googleMapsScriptUrl),
-    [googleMapsScriptBaseUrl, googleMapsScriptUrl]
+    () =>
+      loadGoogleMapScript({
+        apiKey,
+        version: "weekly",
+        libraries: ["places"],
+        language,
+      }),
+    [apiKey, language]
   );
 
   const debouncedPlacePredictions = useCallback(
@@ -71,29 +73,28 @@ export default function usePlacesAutocompleteService({
   useEffect(() => {
     if (!isBrowser) return;
 
-    const buildService = () => {
-      // eslint-disable-next-line no-undef
-      if (!google)
-        return console.error(
-          "Google has not been found. Make sure your provide apiKey prop."
-        );
+    const buildService = (service) => {
+      console.log(service.maps.places, "service.maps.places");
+      console.log(service.maps, "service.maps");
 
       // eslint-disable-next-line no-undef
-      placesAutocompleteService.current =
-        new google.maps.places.AutocompleteService();
+      placesAutocompleteService.current = new (
+        service || google
+      ).maps.places.AutocompleteService();
 
       // eslint-disable-next-line no-undef
-      placesService.current = new google.maps.places.PlacesService(
+      placesService.current = new (service || google).maps.places.PlacesService(
         document.createElement("div")
       );
 
       if (sessionToken)
-        autocompleteSession.current =
-          new google.maps.places.AutocompleteSessionToken();
+        autocompleteSession.current = new (
+          service || google
+        ).maps.places.AutocompleteSessionToken();
     };
 
     if (apiKey) {
-      handleLoadScript().then(() => buildService());
+      handleLoadScript().then(buildService);
     } else {
       buildService();
     }

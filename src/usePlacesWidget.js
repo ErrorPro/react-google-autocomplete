@@ -1,7 +1,6 @@
 import { useEffect, useRef, useCallback } from "react";
 
 import { loadGoogleMapScript, isBrowser } from "./utils";
-import { GOOGLE_MAP_SCRIPT_BASE_URL } from "./constants";
 
 export default function usePlacesWidget(props) {
   const {
@@ -21,19 +20,22 @@ export default function usePlacesWidget(props) {
       bounds,
       ...options
     } = {},
-    googleMapsScriptBaseUrl = GOOGLE_MAP_SCRIPT_BASE_URL,
     language,
   } = props;
   const inputRef = useRef(null);
   const event = useRef(null);
   const autocompleteRef = useRef(null);
   const observerHack = useRef(null);
-  const languageQueryParam = language ? `&language=${language}` : "";
-  const googleMapsScriptUrl = `${googleMapsScriptBaseUrl}?libraries=places&key=${apiKey}${languageQueryParam}`;
 
   const handleLoadScript = useCallback(
-    () => loadGoogleMapScript(googleMapsScriptBaseUrl, googleMapsScriptUrl),
-    [googleMapsScriptBaseUrl, googleMapsScriptUrl]
+    () =>
+      loadGoogleMapScript({
+        apiKey,
+        version: "weekly",
+        libraries: ["places"],
+        language,
+      }),
+    []
   );
 
   useEffect(() => {
@@ -52,22 +54,16 @@ export default function usePlacesWidget(props) {
 
     if (ref && !ref.current) ref.current = inputRef.current;
 
-    const handleAutoComplete = () => {
-      if (typeof google === "undefined")
-        return console.error(
-          "Google has not been found. Make sure your provide apiKey prop."
-        );
-
-      if (!google.maps.places)
+    const handleAutoComplete = (service) => {
+      if ((apiKey && !service.maps.places) || (!apiKey && !google.maps.places))
         return console.error("Google maps places API must be loaded.");
 
       if (!inputRef.current instanceof HTMLInputElement)
         return console.error("Input ref must be HTMLInputElement.");
 
-      autocompleteRef.current = new google.maps.places.Autocomplete(
-        inputRef.current,
-        config
-      );
+      autocompleteRef.current = new (
+        service || google
+      ).maps.places.Autocomplete(inputRef.current, config);
 
       event.current = autocompleteRef.current.addListener(
         "place_changed",
@@ -84,7 +80,7 @@ export default function usePlacesWidget(props) {
     };
 
     if (apiKey) {
-      handleLoadScript().then(() => handleAutoComplete());
+      handleLoadScript().then(handleAutoComplete);
     } else {
       handleAutoComplete();
     }
