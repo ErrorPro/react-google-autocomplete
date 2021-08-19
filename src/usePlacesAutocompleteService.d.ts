@@ -2,7 +2,7 @@ interface usePlacesAutocompleteServiceConfig {
   apiKey?: string;
   googleMapsScriptBaseUrl?: string;
   debounce?: number;
-  options?: google.maps.places.QueryAutocompletionRequest;
+  options?: google.maps.places.AutocompletionRequest;
   sessionToken?: boolean;
   language?: string;
 }
