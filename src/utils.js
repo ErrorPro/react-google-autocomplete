@@ -11,7 +11,7 @@ export const loadGoogleMapScript = (
   }
 
   const scriptElements = document.querySelectorAll(
-    `script[src*="${googleMapsScriptBaseUrl}"`
+    `script[src*="${googleMapsScriptBaseUrl}"]`
   );
 
   if (scriptElements && scriptElements.length) {
