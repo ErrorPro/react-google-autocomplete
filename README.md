@@ -264,7 +264,7 @@ Debounce example lives [here](/docs/debounce.js)
 
 ### Typescript
 
-We are planning on rewriting the library with TS/Flow in the later releases but you can already use it with TypeScript bacause we use [declaration files](https://www.typescriptlang.org/docs/handbook/declaration-files/dts-from-js.html).
+We are planning on rewriting the library with TS/Flow in the later releases but you can already use it with TypeScript because we use [declaration files](https://www.typescriptlang.org/docs/handbook/declaration-files/dts-from-js.html).
 
 ### TODO
 
