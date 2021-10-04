@@ -10,6 +10,7 @@ export interface ReactGoogleAutocompleteProps {
   options?: google.maps.places.AutocompleteOptions;
   apiKey?: string;
   language?: string;
+  googleMapsScriptBaseUrl?: string;
 }
 
 export interface ReactGoogleAutocompleteInputProps
