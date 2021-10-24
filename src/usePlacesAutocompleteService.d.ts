@@ -1,5 +1,6 @@
 interface usePlacesAutocompleteServiceConfig {
   apiKey?: string;
+  libraries?: string[];
   googleMapsScriptBaseUrl?: string;
   debounce?: number;
   options?: google.maps.places.AutocompletionRequest;

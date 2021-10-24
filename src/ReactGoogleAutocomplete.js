@@ -7,6 +7,7 @@ function ReactGoogleAutocomplete(props) {
   const {
     onPlaceSelected,
     apiKey,
+    libraries,
     inputAutocompleteValue,
     options,
     googleMapsScriptBaseUrl,
@@ -20,6 +21,7 @@ function ReactGoogleAutocomplete(props) {
     googleMapsScriptBaseUrl,
     onPlaceSelected,
     apiKey,
+    libraries,
     inputAutocompleteValue,
     options,
     language
@@ -30,6 +32,7 @@ function ReactGoogleAutocomplete(props) {
 
 ReactGoogleAutocomplete.propTypes = {
   apiKey: PropTypes.string,
+  libraries: PropTypes.arrayOf(PropTypes.string),
   ref: PropTypes.oneOfType([
     // Either a function
     PropTypes.func,

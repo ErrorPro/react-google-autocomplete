@@ -6,6 +6,7 @@ import { GOOGLE_MAP_SCRIPT_BASE_URL } from "./constants";
 
 export default function usePlacesAutocompleteService({
   apiKey,
+  libraries,
   googleMapsScriptBaseUrl = GOOGLE_MAP_SCRIPT_BASE_URL,
   debounce = 300,
   options = {},
@@ -13,7 +14,8 @@ export default function usePlacesAutocompleteService({
   language,
 }) {
   const languageQueryParam = language ? `&language=${language}` : "";
-  const googleMapsScriptUrl = `${googleMapsScriptBaseUrl}?key=${apiKey}&libraries=places${languageQueryParam}`;
+  const librariesDefault = libraries ? `${libraries.toString()}` : "places";
+  const googleMapsScriptUrl = `${googleMapsScriptBaseUrl}?key=${apiKey}&libraries=${librariesDefault}${languageQueryParam}`;
   const [placePredictions, setPlacePredictions] = useState([]);
   const [isPlacePredsLoading, setIsPlacePredsLoading] = useState(false);
   const [placeInputValue, setPlaceInputValue] = useState(null);
