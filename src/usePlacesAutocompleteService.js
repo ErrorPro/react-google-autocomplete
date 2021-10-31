@@ -132,5 +132,9 @@ export default function usePlacesAutocompleteService({
       debouncedQueryPredictions(opt);
       setIsQueryPredsLoading(false);
     },
+    refreshSessionToken: () => {
+      autocompleteSession.current =
+        new google.maps.places.AutocompleteSessionToken();
+    },
   };
 }

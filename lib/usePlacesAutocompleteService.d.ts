@@ -22,6 +22,7 @@ interface usePlacesAutocompleteServiceResponse {
   getQueryPredictions: (
     opt: google.maps.places.QueryAutocompletionRequest
   ) => void;
+  refreshSessionToken: () => void;
 }
 
 export default function usePlacesAutocompleteService(
