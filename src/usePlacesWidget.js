@@ -104,7 +104,9 @@ export default function usePlacesWidget(props) {
       observerHack.current = new MutationObserver(() => {
         observerHack.current.disconnect();
 
-        inputRef.current.autocomplete = inputAutocompleteValue;
+        if (inputRef.current) {
+          inputRef.current.autocomplete = inputAutocompleteValue;
+        }
       });
       observerHack.current.observe(inputRef.current, {
         attributes: true,
