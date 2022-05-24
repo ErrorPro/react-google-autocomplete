@@ -1,4 +1,4 @@
-import { useEffect, useRef, useCallback } from "react";
+import React, { useEffect, useRef, useCallback } from "react";
 
 import { loadGoogleMapScript, isBrowser } from "./utils";
 import { GOOGLE_MAP_SCRIPT_BASE_URL } from "./constants";
@@ -95,7 +95,9 @@ export default function usePlacesWidget(props) {
 
   // Autofill workaround adapted from https://stackoverflow.com/questions/29931712/chrome-autofill-covers-autocomplete-for-google-maps-api-v3/49161445#49161445
   useEffect(() => {
+    // TODO find out why react 18(strict mode) hangs the page loading
     if (
+      !React?.version?.startsWith("18") &&
       isBrowser &&
       window.MutationObserver &&
       inputRef.current &&
