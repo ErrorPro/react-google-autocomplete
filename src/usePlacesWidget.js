@@ -69,19 +69,21 @@ export default function usePlacesWidget(props) {
         inputRef.current,
         config
       );
-
-      event.current = autocompleteRef.current.addListener(
-        "place_changed",
-        () => {
-          if (onPlaceSelected && autocompleteRef && autocompleteRef.current) {
-            onPlaceSelected(
-              autocompleteRef.current.getPlace(),
-              inputRef.current,
-              autocompleteRef.current
-            );
+      
+      if(autocompleteRef.current) {
+         event.current = autocompleteRef.current.addListener(
+          "place_changed",
+          () => {
+            if (onPlaceSelected && autocompleteRef && autocompleteRef.current) {
+              onPlaceSelected(
+                autocompleteRef.current.getPlace(),
+                inputRef.current,
+                autocompleteRef.current
+              );
+            }
           }
-        }
-      );
+        );
+      }
     };
 
     if (apiKey) {
