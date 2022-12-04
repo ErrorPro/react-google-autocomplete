@@ -144,7 +144,7 @@ export default () => {
   useEffect(() => {
     // fetch place details for the first element in placePredictions array
     if (placePredictions.length)
-      service.placesService?.getDetails(
+      placesService?.getDetails(
         {
           placeId: placePredictions[0].place_id,
         },
