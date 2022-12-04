@@ -67,7 +67,7 @@ function App() {
             fullWidth
             color="secondary"
             inputComponent={({ inputRef, onFocus, onBlur, ...props }) => (
-              <AutocompleteComponent
+              <Autocomplete
                 apiKey={process.env.REACT_APP_GOOGLE}
                 {...props}
                 onPlaceSelected={(selected) => console.log(selected)}
