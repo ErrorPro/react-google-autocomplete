@@ -59,7 +59,7 @@ export default function usePlacesWidget(props) {
           "Google has not been found. Make sure your provide apiKey prop."
         );
 
-      if (!google.maps.places)
+      if (!google.maps?.places)
         return console.error("Google maps places API must be loaded.");
 
       if (!inputRef.current instanceof HTMLInputElement)
