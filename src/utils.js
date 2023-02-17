@@ -24,12 +24,16 @@ export const loadGoogleMapScript = (
     });
   }
 
+  let scriptUrl = new URL(googleMapsScriptUrl);
+  scriptUrl.searchParams.set(
+    "callback",
+    "__REACT_GOOGLE_AUTOCOMPLETE_CALLBACK__"
+  );
   const el = document.createElement("script");
-  el.src = googleMapsScriptUrl;
-
-  document.body.appendChild(el);
+  el.src = scriptUrl.toString();
 
   return new Promise((resolve) => {
-    el.addEventListener("load", () => resolve());
+    window.__REACT_GOOGLE_AUTOCOMPLETE_CALLBACK__ = resolve;
+    document.body.appendChild(el);
   });
 };
