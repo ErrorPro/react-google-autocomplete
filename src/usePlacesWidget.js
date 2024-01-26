@@ -62,7 +62,7 @@ export default function usePlacesWidget(props) {
       if (!google.maps?.places)
         return console.error("Google maps places API must be loaded.");
 
-      if (!inputRef.current instanceof HTMLInputElement)
+      if (!(inputRef.current instanceof HTMLInputElement))
         return console.error("Input ref must be HTMLInputElement.");
 
       autocompleteRef.current = new google.maps.places.Autocomplete(
