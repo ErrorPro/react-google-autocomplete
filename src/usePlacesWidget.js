@@ -95,6 +95,17 @@ export default function usePlacesWidget(props) {
     return () => (event.current ? event.current.remove() : undefined);
   }, []);
 
+  useEffect(() => {
+    if (autocompleteRef.current && onPlaceSelected) {
+      event.current = autocompleteRef.current.addListener("place_changed", function () {
+        if (onPlaceSelected && autocompleteRef && autocompleteRef.current) {
+          onPlaceSelected(autocompleteRef.current.getPlace(), inputRef.current, autocompleteRef.current);
+        }
+      });
+    }
+    return () => (event.current ? event.current.remove() : undefined);
+  }, [onPlaceSelected]);
+
   // Autofill workaround adapted from https://stackoverflow.com/questions/29931712/chrome-autofill-covers-autocomplete-for-google-maps-api-v3/49161445#49161445
   useEffect(() => {
     // TODO find out why react 18(strict mode) hangs the page loading
