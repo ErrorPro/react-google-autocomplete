@@ -17,7 +17,7 @@ export const loadGoogleMapScript = (
   if (scriptElements && scriptElements.length) {
     return new Promise((resolve) => {
       // in case we already have a script on the page and it's loaded we resolve
-      if (typeof google !== "undefined") return resolve();
+      if (typeof google !== "undefined" && google.maps) return resolve();
 
       // otherwise we wait until it's loaded and resolve
       scriptElements[0].addEventListener("load", () => resolve());
