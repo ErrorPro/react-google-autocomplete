@@ -23,7 +23,7 @@ or
 
 <hr>
 
-As of version 1.2.4, you can now pass an `apiKey` prop to automatically load the Google maps scripts. The api key can be found in your [google cloud console.](https://developers.google.com/maps/documentation/javascript/get-api-key)
+As of version 1.2.4, you can now pass an `apiKey` prop to automatically load the Google maps scripts. The api key can be found in your [google cloud console.](https://developers.google.com/maps/documentation/javascript/get-api-key). The places service hook requires both the Places API and Maps Javascript API to be enabled.
 
 ```js
 <Autocomplete
