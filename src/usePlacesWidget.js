@@ -28,7 +28,6 @@ export default function usePlacesWidget(props) {
   const inputRef = useRef(null);
   const event = useRef(null);
   const autocompleteRef = useRef(null);
-  const observerHack = useRef(null);
   const languageQueryParam = language ? `&language=${language}` : "";
   const googleMapsScriptUrl = `${googleMapsScriptBaseUrl}?libraries=${libraries}&key=${apiKey}${languageQueryParam}`;
 
@@ -62,16 +61,16 @@ export default function usePlacesWidget(props) {
       if (!google.maps?.places)
         return console.error("Google maps places API must be loaded.");
 
-      if (!inputRef.current instanceof HTMLInputElement)
+      if (!(inputRef.current instanceof HTMLInputElement))
         return console.error("Input ref must be HTMLInputElement.");
 
       autocompleteRef.current = new google.maps.places.Autocomplete(
         inputRef.current,
         config
       );
-      
-      if(autocompleteRef.current) {
-         event.current = autocompleteRef.current.addListener(
+
+      if (autocompleteRef.current) {
+        event.current = autocompleteRef.current.addListener(
           "place_changed",
           () => {
             if (onPlaceSelected && autocompleteRef && autocompleteRef.current) {
@@ -95,27 +94,41 @@ export default function usePlacesWidget(props) {
     return () => (event.current ? event.current.remove() : undefined);
   }, []);
 
+  useEffect(() => {
+    if (autocompleteRef.current && onPlaceSelected) {
+      event.current = autocompleteRef.current.addListener("place_changed", function () {
+        if (onPlaceSelected && autocompleteRef && autocompleteRef.current) {
+          onPlaceSelected(autocompleteRef.current.getPlace(), inputRef.current, autocompleteRef.current);
+        }
+      });
+    }
+    return () => (event.current ? event.current.remove() : undefined);
+  }, [onPlaceSelected]);
+
   // Autofill workaround adapted from https://stackoverflow.com/questions/29931712/chrome-autofill-covers-autocomplete-for-google-maps-api-v3/49161445#49161445
   useEffect(() => {
     // TODO find out why react 18(strict mode) hangs the page loading
     if (
-      !React?.version?.startsWith("18") &&
       isBrowser &&
       window.MutationObserver &&
       inputRef.current &&
       inputRef.current instanceof HTMLInputElement
     ) {
-      observerHack.current = new MutationObserver(() => {
-        observerHack.current.disconnect();
+      const observerHack = new MutationObserver(() => {
+        observerHack.disconnect();
 
         if (inputRef.current) {
           inputRef.current.autocomplete = inputAutocompleteValue;
         }
       });
-      observerHack.current.observe(inputRef.current, {
+      observerHack.observe(inputRef.current, {
         attributes: true,
         attributeFilter: ["autocomplete"],
       });
+
+      return () => {
+        observerHack.disconnect(); // Cleanup
+      };
     }
   }, [inputAutocompleteValue]);
 
