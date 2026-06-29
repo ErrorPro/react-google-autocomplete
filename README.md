@@ -71,6 +71,16 @@ import Autocomplete from "react-google-autocomplete";
 
 - `onPlaceSelected: (place: `[PlaceResult](https://developers.google.com/maps/documentation/javascript/reference/places-service#PlaceResult)`, inputRef, `[autocompleteRef](https://developers.google.com/maps/documentation/javascript/reference/places-widget#Autocomplete)`) => void`: The function gets invoked every time a user chooses location.
 
+- `onLoadFailed: (error: Error | ErrorEvent) => void`: Optional. The function gets invoked when the Google Maps script fails to load (e.g. it is blocked by an ad-blocker or CSP, the network is down, or a CDN/DNS error occurs) or when Google reports an authentication/quota failure via its global `gm_authFailure` callback (invalid API key, disabled billing, referrer restrictions, exceeded quota). When omitted, behavior is unchanged.
+
+  ```js
+  <ReactGoogleAutocomplete
+    apiKey={YOUR_GOOGLE_MAPS_API_KEY}
+    onPlaceSelected={(place) => console.log(place)}
+    onLoadFailed={(error) => console.error("Could not load Google Maps", error)}
+  />
+  ```
+
 - `options`: [Google autocomplete options.](https://developers.google.com/maps/documentation/javascript/reference/places-widget#AutocompleteOptions)
 
   - `options.types`: By default it uses (cities).
@@ -112,7 +122,7 @@ export default () => {
 
 ### Arguments
 
-It has only one config argument which has propperties: `apiKey`, `ref`, `onPlaceSelected`, `options`, `inputAutocompleteValue`, `googleMapsScriptBaseUrl`. The same props described [here](#reactgoogleautocomplete)
+It has only one config argument which has propperties: `apiKey`, `ref`, `onPlaceSelected`, `onLoadFailed`, `options`, `inputAutocompleteValue`, `googleMapsScriptBaseUrl`. The same props described [here](#reactgoogleautocomplete)
 
 ### Returned value
 
