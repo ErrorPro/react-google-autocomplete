@@ -6,6 +6,7 @@ export interface ReactGoogleAutocompleteProps {
     ref: RefObject<HTMLInputElement>,
     autocompleteRef: RefObject<google.maps.places.Autocomplete>
   ) => void;
+  onLoadFailed?: (error: Error | ErrorEvent) => void;
   inputAutocompleteValue?: string;
   options?: google.maps.places.AutocompleteOptions;
   libraries?: string[];

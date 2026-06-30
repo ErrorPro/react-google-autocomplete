@@ -24,6 +24,7 @@ export default function usePlacesWidget(props) {
     } = {},
     googleMapsScriptBaseUrl = GOOGLE_MAP_SCRIPT_BASE_URL,
     language,
+    onLoadFailed,
   } = props;
   const inputRef = useRef(null);
   const event = useRef(null);
@@ -85,13 +86,40 @@ export default function usePlacesWidget(props) {
       }
     };
 
+    // Google only surfaces auth/quota failures (invalid key, disabled billing,
+    // referrer not allowed, over quota) through the global gm_authFailure
+    // callback. When the consumer opts in via onLoadFailed, chain any
+    // pre-existing handler so we don't clobber it, and restore it on cleanup.
+    const previousAuthFailure = isBrowser ? window.gm_authFailure : undefined;
+
+    if (isBrowser && onLoadFailed) {
+      window.gm_authFailure = (...args) => {
+        if (typeof previousAuthFailure === "function")
+          previousAuthFailure(...args);
+        onLoadFailed(
+          new Error(
+            "Google Maps authentication failed. This may be caused by an invalid API key, disabled billing, referrer restrictions, or exceeded quota."
+          )
+        );
+      };
+    }
+
     if (apiKey) {
-      handleLoadScript().then(() => handleAutoComplete());
+      handleLoadScript()
+        .then(() => handleAutoComplete())
+        // always attach a catch so a rejected load never becomes an unhandled
+        // promise rejection; forward it to the consumer when they opted in
+        .catch((error) => {
+          if (onLoadFailed) onLoadFailed(error);
+        });
     } else {
       handleAutoComplete();
     }
 
-    return () => (event.current ? event.current.remove() : undefined);
+    return () => {
+      if (event.current) event.current.remove();
+      if (isBrowser && onLoadFailed) window.gm_authFailure = previousAuthFailure;
+    };
   }, []);
 
   useEffect(() => {

@@ -15,12 +15,15 @@ export const loadGoogleMapScript = (
   );
 
   if (scriptElements && scriptElements.length) {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       // in case we already have a script on the page and it's loaded we resolve
       if (typeof google !== "undefined") return resolve();
 
       // otherwise we wait until it's loaded and resolve
       scriptElements[0].addEventListener("load", () => resolve());
+
+      // or reject if it fails to load (e.g. blocked, network/CDN error)
+      scriptElements[0].addEventListener("error", (error) => reject(error));
     });
   }
 
@@ -32,8 +35,12 @@ export const loadGoogleMapScript = (
   const el = document.createElement("script");
   el.src = scriptUrl.toString();
 
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     window.__REACT_GOOGLE_AUTOCOMPLETE_CALLBACK__ = resolve;
+
+    // reject if the script fails to load (e.g. blocked, network/CDN error)
+    el.addEventListener("error", (error) => reject(error));
+
     document.body.appendChild(el);
   });
 };

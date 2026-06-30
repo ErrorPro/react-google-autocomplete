@@ -13,6 +13,7 @@ function ReactGoogleAutocomplete(props) {
     googleMapsScriptBaseUrl,
     refProp,
     language,
+    onLoadFailed,
     ...rest
   } = props;
 
@@ -24,7 +25,8 @@ function ReactGoogleAutocomplete(props) {
     libraries,
     inputAutocompleteValue,
     options,
-    language
+    language,
+    onLoadFailed,
   });
 
   return <input ref={ref} {...rest} />;
@@ -41,6 +43,7 @@ ReactGoogleAutocomplete.propTypes = {
   ]),
   googleMapsScriptBaseUrl: PropTypes.string,
   onPlaceSelected: PropTypes.func,
+  onLoadFailed: PropTypes.func,
   inputAutocompleteValue: PropTypes.string,
   options: PropTypes.shape({
     componentRestrictions: PropTypes.object,
